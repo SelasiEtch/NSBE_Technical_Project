@@ -11,6 +11,8 @@ const int Right2= 10;
 // Left1 - Pin 6
 const int Right1= 11;
 
+int incomingByte = 0;
+
 void Sensor_Setup()
 {
   pinMode(trigPin, OUTPUT);
@@ -113,9 +115,31 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  //Sensor_Read();
-  Motor_Forward(1,5);
-  while(1);
+  Sensor_Read();
+  if (Serial.available() > 0) {
+    // read the incoming byte:
+    incomingByte = Serial.read();
+
+    if(incomingByte == 119) // Forward if UART Byte is 'w'
+    {
+      Motor_Forward(1, 3);
+    }
+
+    if(incomingByte == 119) // Backwards if UART Byte is 's'
+    {
+      Motor_Backward(1, 3);
+    }
+
+    if(incomingByte == 119) // Left if UART Byte is 'a'
+    {
+      Motor_Left(1, 3);
+    }
+
+    if(incomingByte == 119) // Right if UART Byte is 'd'
+    {
+      Motor_Right(1, 3);
+    }
+  }
 
 }
 
