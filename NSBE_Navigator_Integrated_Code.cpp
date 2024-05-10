@@ -115,11 +115,56 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Sensor_Read();
+  //Sensor_Read();
   if (Serial.available() > 0) {
     // read the incoming byte:
     incomingByte = Serial.read();
 
+    if(incomingByte == 119) // Forward if UART Byte is 'w'
+    {
+      analogWrite(Left1, 255);
+      analogWrite(Left2, 0);
+      analogWrite(Right1, 255);
+      analogWrite(Right2, 0);
+      Serial.println("Forward");
+    }
+
+    else if(incomingByte == 119) // Backwards if UART Byte is 's'
+    {
+      analogWrite(Left1, 0);
+      analogWrite(Left2, 255);
+      analogWrite(Right1, 0);
+      analogWrite(Right2, 255);
+      Serial.println("Backwards");
+    }
+
+    else if(incomingByte == 119) // Left if UART Byte is 'a'
+    {
+      analogWrite(Left1, 255);
+      analogWrite(Left2, 0);
+      analogWrite(Right1, 0);
+      analogWrite(Right2, 255);
+      Serial.println("Left");
+    }
+
+    else if(incomingByte == 119) // Right if UART Byte is 'd'
+    {
+      analogWrite(Left1, 0);
+      analogWrite(Left2, 255);
+      analogWrite(Right1, 255);
+      analogWrite(Right2, 0);
+      Serial.println("Right");
+    }
+
+    else if(incomingByte == 112) // Right if UART Byte is 'd'
+    {
+    analogWrite(Left1, 0);
+    analogWrite(Left2, 0);
+    analogWrite(Right1, 0);
+    analogWrite(Right2, 0);
+    Serial.println("Stall");
+    }
+    /*
     if(incomingByte == 119) // Forward if UART Byte is 'w'
     {
       Motor_Forward(1, 3);
@@ -139,6 +184,7 @@ void loop() {
     {
       Motor_Right(1, 3);
     }
+    */
   }
 
 }
